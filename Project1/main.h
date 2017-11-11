@@ -11,33 +11,33 @@
 #include<time.h>
 #include<math.h>
 #include <imm.h>  
-extern "C"
-{
-#include<lua.h>
-#include<lualib.h>
-#include<lauxlib.h>
-}
+#include"tinyxml2.h"
 #pragma comment (lib ,"imm32.lib") 
 #pragma comment(lib,"d3d9.lib")
 #pragma comment(lib,"d3dx9.lib")
 #pragma comment(lib,"dinput8.lib")
 #pragma comment(lib,"dxguid.lib")
-#pragma comment(lib,"lua5.1.lib")
 #pragma comment(lib, "legacy_stdio_definitions.lib")
 using namespace std;
+using namespace tinyxml2;
 #define Color_White D3DCOLOR_XRGB(255,255,255)
 #define Color_Black D3DCOLOR_XRGB(0,0,0)
+#define GS GameState::instance()
 
 //³£Á¿ 
+extern bool Over;
+extern bool showcursor;
+extern bool limitcursor;
+extern string Title;
+string texturetoload[];
 extern RECT window;
 extern POINT mousepos;
-extern bool Over;
 extern char keys[256];
 extern char prekeys[256];
 enum keypress { press, hold, loose };
 enum controller{mousecol,keycol,nothing};
-extern  int Swidth;
-extern const int Sheight;
+extern int  Swidth;
+extern int Sheight;
 extern RECT framerect;
 extern RECT textrect;
 extern string text;
@@ -59,12 +59,12 @@ extern LPDIRECTINPUTDEVICE8 keyboard;
 extern LPDIRECTINPUTDEVICE8 mouse; 
 extern DIMOUSESTATE mousexy;
 //º¯Êý
-//Lua
-bool Lua_Init();
-int Lua_GetInt(lua_State* pl, const string &zname);
 
+
+void Settings();
 void All_Run();
 string inttostring(const int &a);
+int stringtoint(const string &a);
 void Draw();
 LPD3DXFONT LoadFont(int height);
 void printtext(string text,int r,int g,int b);
@@ -85,9 +85,5 @@ class myvector
 		myvector(float a,float b):x(a),y(b){
 		}
 };
-extern MySprite sp;
-extern MySprite cursor;
-extern MySprite cinfo;
-extern MySprite aientity;
-extern DrawManager dm;
+
 

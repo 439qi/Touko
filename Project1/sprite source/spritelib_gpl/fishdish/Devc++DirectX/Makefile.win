@@ -1,0 +1,42 @@
+# Project: Transistor
+# Makefile created by Dev-C++ 5.3.0.2
+
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
+WINDRES  = windres.exe
+RES      = 工程1_private.res
+OBJ      = main.o D3D_op.o draw.o font.o $(RES)
+LINKOBJ  = main.o D3D_op.o draw.o font.o $(RES)
+LIBS     = -L"C:/Program Files/Dev-Cpp/MinGW32/lib" -L"D:/DirectX/Lib/x86" -static-libstdc++ -static-libgcc -L"D:/DirectX/Lib/x86" -mwindows ../DirectX/Lib/x86/d2d1.lib ../DirectX/Lib/x86/d3d9.lib ../DirectX/Lib/x86/d3d10.lib ../DirectX/Lib/x86/d3d10_1.lib ../DirectX/Lib/x86/d3d11.lib ../DirectX/Lib/x86/d3dcompiler.lib ../DirectX/Lib/x86/D3DCSX.lib ../DirectX/Lib/x86/D3DCSXd.lib ../DirectX/Lib/x86/d3dx9.lib ../DirectX/Lib/x86/d3dx9d.lib ../DirectX/Lib/x86/d3dx10d.lib ../DirectX/Lib/x86/d3dx11.lib ../DirectX/Lib/x86/d3dx11d.lib ../DirectX/Lib/x86/d3dxof.lib ../DirectX/Lib/x86/dinput8.lib ../DirectX/Lib/x86/dsetup.lib ../DirectX/Lib/x86/dsound.lib ../DirectX/Lib/x86/dwrite.lib ../DirectX/Lib/x86/DxErr.lib ../DirectX/Lib/x86/dxgi.lib ../DirectX/Lib/x86/dxguid.lib ../DirectX/Lib/x86/X3DAudio.lib ../DirectX/Lib/x86/xapobase.lib ../DirectX/Lib/x86/xapobased.lib ../DirectX/Lib/x86/XAPOFX.lib ../DirectX/Lib/x86/XInput.lib  -g3
+INCS     = -I"C:/Program Files/Dev-Cpp/MinGW32/include" -I"D:/DirectX/Include" -I"D:/DirectX/Include"
+CXXINCS  = -I"C:/Program Files/Dev-Cpp/MinGW32/include" -I"D:/DirectX/Include" -I"D:/DirectX/Include"
+BIN      = Transistor.exe
+CXXFLAGS = $(CXXINCS)  -g3
+CFLAGS   = $(INCS)  -g3
+RM       = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+main.o: main.cpp main.h D:/DirectX/Include/d3d9.h  D:/DirectX/Include/d3d9types.h D:/DirectX/Include/d3d9caps.h  D:/DirectX/Include/d3dx9.h D:/DirectX/Include/d3d9.h  D:/DirectX/Include/d3dx9math.h D:/DirectX/Include/d3dx9.h  D:/DirectX/Include/d3dx9core.h D:/DirectX/Include/d3dx9xof.h  D:/DirectX/Include/d3dx9mesh.h D:/DirectX/Include/d3dx9shader.h  D:/DirectX/Include/d3dx9effect.h D:/DirectX/Include/d3dx9tex.h  D:/DirectX/Include/d3dx9shape.h D:/DirectX/Include/d3dx9anim.h  D:/DirectX/Include/d3dx9math.h
+	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+
+D3D_op.o: D3D_op.cpp main.h D:/DirectX/Include/d3d9.h  D:/DirectX/Include/d3d9types.h D:/DirectX/Include/d3d9caps.h  D:/DirectX/Include/d3dx9.h D:/DirectX/Include/d3d9.h  D:/DirectX/Include/d3dx9math.h D:/DirectX/Include/d3dx9.h  D:/DirectX/Include/d3dx9core.h D:/DirectX/Include/d3dx9xof.h  D:/DirectX/Include/d3dx9mesh.h D:/DirectX/Include/d3dx9shader.h  D:/DirectX/Include/d3dx9effect.h D:/DirectX/Include/d3dx9tex.h  D:/DirectX/Include/d3dx9shape.h D:/DirectX/Include/d3dx9anim.h  D:/DirectX/Include/d3dx9math.h
+	$(CPP) -c D3D_op.cpp -o D3D_op.o $(CXXFLAGS)
+
+draw.o: draw.cpp main.h D:/DirectX/Include/d3d9.h  D:/DirectX/Include/d3d9types.h D:/DirectX/Include/d3d9caps.h  D:/DirectX/Include/d3dx9.h D:/DirectX/Include/d3d9.h  D:/DirectX/Include/d3dx9math.h D:/DirectX/Include/d3dx9.h  D:/DirectX/Include/d3dx9core.h D:/DirectX/Include/d3dx9xof.h  D:/DirectX/Include/d3dx9mesh.h D:/DirectX/Include/d3dx9shader.h  D:/DirectX/Include/d3dx9effect.h D:/DirectX/Include/d3dx9tex.h  D:/DirectX/Include/d3dx9shape.h D:/DirectX/Include/d3dx9anim.h  D:/DirectX/Include/d3dx9math.h
+	$(CPP) -c draw.cpp -o draw.o $(CXXFLAGS)
+
+font.o: font.cpp main.h D:/DirectX/Include/d3d9.h  D:/DirectX/Include/d3d9types.h D:/DirectX/Include/d3d9caps.h  D:/DirectX/Include/d3dx9.h D:/DirectX/Include/d3d9.h  D:/DirectX/Include/d3dx9math.h D:/DirectX/Include/d3dx9.h  D:/DirectX/Include/d3dx9core.h D:/DirectX/Include/d3dx9xof.h  D:/DirectX/Include/d3dx9mesh.h D:/DirectX/Include/d3dx9shader.h  D:/DirectX/Include/d3dx9effect.h D:/DirectX/Include/d3dx9tex.h  D:/DirectX/Include/d3dx9shape.h D:/DirectX/Include/d3dx9anim.h  D:/DirectX/Include/d3dx9math.h
+	$(CPP) -c font.cpp -o font.o $(CXXFLAGS)
+
+工程1_private.res: 工程1_private.rc 
+	$(WINDRES) -i 工程1_private.rc --input-format=rc -o 工程1_private.res -O coff 

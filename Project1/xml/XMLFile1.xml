@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?><!--m_frameh,m_framep,m_startframe,m_endframe-->
+<Sprite>
+  <Cursor>
+    <icon id="0">
+      <imageindex>1</imageindex>
+      <framew></framew>
+      <frameh></frameh>
+      <framep></framep>
+      <startframe></startframe>
+      <endframe></endframe>
+  </icon>
+  </Cursor> 
+  <Entity>
+  </Entity>
+  
+</Sprite>

@@ -23,6 +23,9 @@
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="tinyxml2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="assistance.cpp">
@@ -40,7 +43,7 @@
     <ClCompile Include="DirectX.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="lua.cpp">
+    <ClCompile Include="tinyxml2.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

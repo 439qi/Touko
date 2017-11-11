@@ -1,10 +1,12 @@
 #include"main.h"
- int Swidth;
-const int Sheight=600;
+int Swidth;
+int Sheight;
 RECT window;
 bool Over=false;
 bool showcursor = false;
+bool limitcursor = false;
 HWND hwnd;
+string Title;
 LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) {
 	switch(Message) {
 		
@@ -29,15 +31,16 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) 
 {
-	
-	lua_State*
-		lua = lua_open();
-	luaopen_base(lua);
-	luaopen_string(lua);
-	luaopen_math(lua);
-	luaopen_table(lua);
-	luaL_dofile(lua, "date_init.lua");
- Swidth = Lua_GetInt(lua, "Swidth");
+	tinyxml2::XMLDocument* doc = new tinyxml2::XMLDocument(); if (doc == NULL) MessageBox(NULL, "Error Load Xm", "Error", MB_OK);
+	int res = doc->LoadFile("xml/Settings.xml");
+	if (res) MessageBox(NULL, "Error Load Xml", inttostring(res).c_str(), MB_OK);
+	XMLElement* setting = doc->RootElement();
+	if (setting == NULL) MessageBox(NULL, "Error Get root", "Error", MB_OK);
+	XMLElement* wdst = setting->FirstChildElement("window");
+	if (wdst == NULL)   (NULL, "Error Load node", "Error", MB_OK);
+	Swidth = wdst->Int64Attribute("width"); Sheight = wdst->Int64Attribute("height");
+	Title = wdst->Attribute("titlename"); showcursor = wdst->Int64Attribute("showcursor"); limitcursor = wdst->Int64Attribute("limitcursor");
+	delete doc; 
 	WNDCLASSEX wc; /* A properties struct of our window */
 	HWND hwnd; /* A 'HANDLE', hence the H, or a pointer to our window */
 	MSG Msg; 
@@ -51,7 +54,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	
 	/* White, COLOR_WINDOW is just a #define for a system color, try Ctrl+Clicking it */
 	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW+1);
-	wc.lpszClassName = "WindowClass";
+	wc.lpszClassName = Title.c_str();
 	wc.hIcon		 = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1)); /* Load a standard icon */
 	wc.hIconSm		 = LoadIcon(NULL,  NULL);
 
@@ -60,11 +63,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		return 0;
 	}
 
-	hwnd = CreateWindowEx(WS_EX_CLIENTEDGE,"WindowClass","Transistor",WS_VISIBLE|WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, /* x */
+	hwnd = CreateWindowEx(WS_EX_CLIENTEDGE,Title.c_str(),Title.c_str(),WS_VISIBLE|WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT , /* x */
 		CW_USEDEFAULT, /* y */
-		Swidth, /* width */
-		Sheight, /* height */
+		int(Swidth), /* width */
+		int(Sheight), /* height */
 		NULL,NULL,hInstance,NULL);
 
 	if(hwnd == NULL) {
@@ -73,11 +76,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 	HIMC g_hIMC = NULL;//g_hIMC 用于恢复时使用  
 	g_hIMC = ImmAssociateContext(hwnd, NULL);//handle 为要禁用的窗口句柄  
+	if (limitcursor) {
+		GetWindowRect(hwnd, &window);
+		ClipCursor(&window);
+	}
 	D3D_Init(hwnd); ShowCursor(showcursor); 
 	while(!Over)
 	{
-		GetWindowRect(hwnd, &window);
-		ClipCursor(&window);
+		
 		if(PeekMessage(&Msg, NULL, 0, 0,PM_REMOVE)) 
 		{ 
 		TranslateMessage(&Msg); 
@@ -85,8 +91,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 		
 		Dinput_Update();
-		All_Run();
-		Draw();
+		GameState::instance()->m_currentstate->Execute();
 		
 	}
 	D3D_End();

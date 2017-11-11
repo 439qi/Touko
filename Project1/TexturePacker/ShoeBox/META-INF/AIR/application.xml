@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<application xmlns="http://ns.adobe.com/air/application/3.1">
+  <id>ShoeBox</id>
+  <versionNumber>3.5.2</versionNumber>
+  <filename>ShoeBox</filename>
+  <name>ShoeBox</name>
+  <initialWindow>
+    <title>ShoeBox</title>
+    <content>ShoeBox.swf</content>
+    <systemChrome>none</systemChrome>
+    <transparent>true</transparent>
+    <visible>true</visible>
+    <minimizable>false</minimizable>
+    <maximizable>false</maximizable>
+    <resizable>false</resizable>
+    <width>504</width>
+    <height>192</height>
+    <renderMode>direct</renderMode>
+  </initialWindow>
+  <!-- 
+	More options:
+	http://livedocs.adobe.com/flex/3/html/File_formats_1.html#1043413
+	-->
+  <icon>
+    <image16x16>ico_16x16.png</image16x16>
+    <image32x32>ico_32x32.png</image32x32>
+    <image48x48>ico_48x48.png</image48x48>
+    <image128x128>ico_128x128.png</image128x128>
+  </icon>
+  <description>Free AIR app (Win, Mac) with drag and drop Game Development tools.</description>
+  <copyright>renderhjs.net/shoebox</copyright>
+  <supportedProfiles>desktop extendedDesktop</supportedProfiles>
+  <fileTypes>
+    <fileType>
+      <name>ShoeBox</name>
+      <extension>sbx</extension>
+      <description>ShoeBox Settings</description>
+      <contentType>text/plain</contentType>
+    </fileType>
+  </fileTypes>
+</application>

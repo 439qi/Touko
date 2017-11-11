@@ -5,12 +5,45 @@
 using namespace std;
 #ifndef classes
 #define classes
-class OriSprite 
-{public:D3DXVECTOR3 m_pos;
-		int m_index;
-		RECT m_framerect;
-		virtual ~OriSprite();
+class Button
+{
+public:int m_imageindex;
+	   D3DXVECTOR3 m_pos;
+	   RECT m_rect;
+	   Button(int imageindex, int id, int x, int y);
+	   void LoadXml();
 };
+class State
+{
+public:virtual void Execute() = 0;
+};
+class GameState
+{
+public:vector<Button*> m_buttons;
+	   GameState();
+	   State* m_currentstate;
+	   static GameState gs;
+	   static GameState* instance();
+};
+class GameState_Menu :public State
+{
+public:void Execute();
+	   static GameState_Menu gsm;
+	   static GameState_Menu* instance();
+
+};
+
+class OriSprite 
+{public:
+		int m_imageindex, m_framew, m_frameh,m_framep,m_startframe,m_endframe;
+		D3DXVECTOR3 m_pos,m_sale,m_centre,m_rotation;
+		RECT m_framerect;
+public:	OriSprite(int id, int posx, int posy);
+		void LoadXml(OriSprite &os);
+		virtual ~OriSprite();
+		virtual void Update()=0;
+};
+
 class MySprite:public OriSprite
 {public://数据成员 
 		D3DXVECTOR3 m_pos; D3DXVECTOR3 m_prepos;
@@ -19,17 +52,11 @@ class MySprite:public OriSprite
 		int m_width,m_height;
 		int m_frame,m_startframe,m_endframe,m_framep,m_starttime,m_direction,m_delay;
 		//成员函数 
-		MySprite(int index,float posx,float posy, int framew, int frameh,int startframe,int endframe,int framep,int direction,int delay);
 		void Animate();
 		void MouseUpdate();
 		void KeyUpdate();
 		void SelfUpdate();
-		void DrawFrame();
 };
-class DrawManager
-{
-public:vector<OriSprite> m_todraw;
-	   void SpriteReigster(MySprite &spritetodraw);
-	   void qdraw();
-};
+
+
 #endif 
