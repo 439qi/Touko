@@ -1,0 +1,10 @@
+<TextureAtlas imagePath="sprites.png">
+	<SubTexture name="run_frame0.png" x="48" y="0" width="48" height="48"/>
+	<SubTexture name="run_frame1.png" x="96" y="0" width="48" height="48"/>
+	<SubTexture name="run_frame2.png" x="48" y="96" width="48" height="48"/>
+	<SubTexture name="run_frame3.png" x="48" y="48" width="48" height="48"/>
+	<SubTexture name="stand_frame0.png" x="96" y="48" width="48" height="48"/>
+	<SubTexture name="stand_frame1.png" x="0" y="96" width="48" height="48"/>
+	<SubTexture name="stand_frame2.png" x="0" y="48" width="48" height="48"/>
+	<SubTexture name="stand_frame3.png" x="0" y="0" width="48" height="48"/>
+</TextureAtlas>
