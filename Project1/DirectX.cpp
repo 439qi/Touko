@@ -1,6 +1,6 @@
 #include"main.h"
 const int texnum = 5;
-string texturetoload[texnum] = { "./pics/character.png","./pics/cursor.png" ,"./pics/charinfo.png","./pics/jl.png","./pics/blueSheet.png" };
+string texturetoload[texnum] = { "./pics/id_314.png","./pics/cursor.png" ,"./pics/charinfo.png","./pics/jl.png","./pics/blueSheet.png" };
 string surfacetoload = "./pics/background.jpg";
 //D3D≥ı ºªØ
 LPDIRECT3D9 d3d = NULL;

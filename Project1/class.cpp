@@ -9,6 +9,7 @@ GameState::GameState()
 {
 	m_currentstate =&gsm;
 	m_buttons.push_back(new Button(4,0,0,0));
+	stranger = new Player(0,400,300);
 }
 GameState* GameState::instance()
 {
@@ -17,8 +18,10 @@ GameState* GameState::instance()
 }
 
 
+
 void GameState_Menu::Execute()
 {
+	GS->stranger->Update();
 	d3ddev->Clear(0, 0, D3DCLEAR_TARGET, D3DCOLOR_XRGB(255, 255, 255), 1.0f, 0);
 	if (!d3ddev)	MessageBox(NULL, "d3ddev not existed", "Error", MB_OK);
 	if (d3ddev->BeginScene())
@@ -26,6 +29,7 @@ void GameState_Menu::Execute()
 		d3ddev->StretchRect(surface, NULL, backbuffer, NULL, D3DTEXF_NONE);
 		spriteobj->Begin(D3DXSPRITE_ALPHABLEND);
 		spriteobj->Draw(texture[GS->m_buttons[0]->m_imageindex], &GS->m_buttons[0]->m_rect, NULL, &GS->m_buttons[0]->m_pos, Color_White);
+		spriteobj->Draw(texture[GS->stranger->m_imageindex], &GS->stranger->m_framerect, NULL, &GS->stranger->m_pos, Color_White);
 		printtext(text, 0, 0, 0);
 		spriteobj->End();
 		d3ddev->EndScene();
@@ -34,6 +38,9 @@ void GameState_Menu::Execute()
 	
 	if (Key_Down(DIK_ESCAPE))  Over = true;
 }
+
+
+
 Button::Button(int imageindex,int id,int x,int y)
 {
 	LoadXml(); m_imageindex = imageindex;
@@ -52,18 +59,56 @@ void Button::LoadXml()
 	m_rect.right = m_rect.left + node->Int64Attribute("width"); m_rect.bottom = m_rect.top + node->Int64Attribute("height");
 	delete doc;
 }
+
+void OriSprite::LoadXml()
+{	
+	tinyxml2::XMLDocument* doc = new tinyxml2::XMLDocument(); if (doc == NULL) MessageBox(NULL, "Error Load Xm", "Error", MB_OK);
+	int res = doc->LoadFile("./xml/XMLFile1.xml");
+	if (res) MessageBox(NULL, "Error Load Xml", inttostring(res).c_str(), MB_OK);
+	XMLElement* sprite = doc->RootElement();
+	if (sprite == NULL) MessageBox(NULL, "Error Get root", "Error", MB_OK);
+	XMLElement* cursor = sprite->FirstChildElement("Player");
+	if (cursor == NULL)   (NULL, "Error Load cursor", "Error", MB_OK);
+	m_imageindex = cursor->Int64Attribute("imageindex");
+	m_framew = cursor->Int64Attribute("framew"); m_frameh = cursor->Int64Attribute("frameh"); m_framep = cursor->Int64Attribute("framep");
+	m_startframe = cursor->Int64Attribute("startframe"); m_endframe = cursor->Int64Attribute("endframe");
+	delete doc;
+}
 OriSprite::OriSprite(int id,int posx, int posy)
-{
-	m_pos.x = posx; m_pos.y = posy;
+{	
+	LoadXml();
+	m_pos.x = posx; m_pos.y = posy; m_pos.z = 0;
 
 }
 OriSprite::~OriSprite(){}
+
+Player::Player(int id,int posx,int posy)
+{	
+	OriSprite::LoadXml(); m_pos.x = posx; m_pos.y = posy; m_pos.z = 0;
+	
+	m_starttime=(int)GetTickCount();
+	m_frame = m_startframe; m_delay = 150;
+}
+void Player::Update()
+{	
+	if ((int)GetTickCount() > m_starttime + m_delay)
+	{
+		m_starttime = (int)GetTickCount();
+		m_frame += 1;
+		if (m_frame > m_endframe)	m_frame = m_startframe;
+		if (m_frame < m_startframe)	m_frame = m_endframe;
+	}
+	m_framerect.left = long((m_frame%m_framep)*m_framew);
+	m_framerect.top = long((m_frame / m_framep)*m_frameh);
+	m_framerect.right = long((m_framerect.left + m_framew));
+	m_framerect.bottom = long((m_framerect.top + m_frameh));
+}
 /*void MySprite::Animate()
 {	
 	if ((int)GetTickCount() > m_starttime + m_delay)
 	{
 		m_starttime = (int)GetTickCount();
-		m_frame += m_direction;
+		m_frame += 1;
 		if (m_frame > m_endframe)	m_frame = m_startframe;
 		if (m_frame < m_startframe)	m_frame = m_endframe;
 	}

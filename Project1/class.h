@@ -17,9 +17,32 @@ class State
 {
 public:virtual void Execute() = 0;
 };
+
+class OriSprite
+{
+public:
+	int m_imageindex, m_framew, m_frameh, m_framep, m_startframe, m_endframe;
+	D3DXVECTOR3 m_pos, m_sale, m_centre, m_rotation;
+	RECT m_framerect;
+	OriSprite(int id, int posx, int posy);
+	OriSprite(){}
+		void LoadXml();
+		virtual ~OriSprite();
+		virtual void Update() = 0;
+};
+
+class Player :public OriSprite
+{
+public:int m_frame, m_starttime, m_delay;
+	   Player(int id, int posx, int posy);
+	   void Update();
+};
+
+
 class GameState
 {
 public:vector<Button*> m_buttons;
+	   Player* stranger;
 	   GameState();
 	   State* m_currentstate;
 	   static GameState gs;
@@ -29,20 +52,10 @@ class GameState_Menu :public State
 {
 public:void Execute();
 	   static GameState_Menu gsm;
-	   static GameState_Menu* instance();
 
 };
 
-class OriSprite 
-{public:
-		int m_imageindex, m_framew, m_frameh,m_framep,m_startframe,m_endframe;
-		D3DXVECTOR3 m_pos,m_sale,m_centre,m_rotation;
-		RECT m_framerect;
-public:	OriSprite(int id, int posx, int posy);
-		void LoadXml(OriSprite &os);
-		virtual ~OriSprite();
-		virtual void Update()=0;
-};
+
 
 class MySprite:public OriSprite
 {public://数据成员 
