@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?><!--m_frameh,m_framep,m_startframe,m_endframe-->
+<Sprite>
+  <Player
+  imageindex="0"
+  framew="48"
+  frameh="48"
+  framep="8"
+  startframe="0"
+  endframe="3"
+    />
+  <Cursor
+      id="0"
+      imageindex="1"
+      framew="48"
+      frameh="48"
+      framep="6"
+      startframe="0"
+      endframe="5"
+      />
+  <Cursor
+      id="1"
+      imageindex="1"
+      framew="32"
+      frameh="32"
+      framep="9"
+      startframe="0"
+      endframe="5"
+      />
+  <Entity
+      
+    
+  />
+
+  
+</Sprite>
